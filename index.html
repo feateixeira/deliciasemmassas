@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monte Seu Macarrão</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Logo -->
+        <header>
+            <img src="assets/logo.png" alt="Logo" class="logo">
+            <h1>Monte Seu Macarrão</h1>
+            <p>Personalize seu macarrão e faça seu pedido!</p>
+        </header>
+
+        <!-- Campo de Nome -->
+        <div class="campo-nome">
+            <label for="nome">Seu Nome:</label>
+            <input type="text" id="nome" placeholder="Digite seu nome">
+        </div>
+
+        <!-- Formulário de Pedido -->
+        <form id="pedidoForm">
+            <section class="secao">
+                <h2>Escolha sua Massa:</h2>
+                <label><input type="radio" name="massa" value="Penne" required> Penne</label>
+                <label><input type="radio" name="massa" value="Talharim"> Talharim</label>
+                <label><input type="radio" name="massa" value="Espaguete"> Espaguete</label>
+            </section>
+
+            <section class="secao">
+                <h2>Escolha seus Molhos (até 2):</h2>
+                <label><input type="checkbox" name="molho" value="Bolonhesa"> Bolonhesa</label>
+                <label><input type="checkbox" name="molho" value="Molho Branco"> Molho Branco</label>
+                <label><input type="checkbox" name="molho" value="Molho Cheddar"> Molho Cheddar</label>
+            </section>
+
+            <section class="secao">
+                <h2>Escolha seus Ingredientes:</h2>
+                <div class="ingrediente">
+                    <button type="button" class="btn-menos" data-ingrediente="Azeitona">-</button>
+                    <span class="quantidade" data-ingrediente="Azeitona">0</span>
+                    <button type="button" class="btn-mais" data-ingrediente="Azeitona">+</button>
+                    <span class="nome-ingrediente">Azeitona</span>
+                </div>
+                <div class="ingrediente">
+                    <button type="button" class="btn-menos" data-ingrediente="Milho">-</button>
+                    <span class="quantidade" data-ingrediente="Milho">0</span>
+                    <button type="button" class="btn-mais" data-ingrediente="Milho">+</button>
+                    <span class="nome-ingrediente">Milho</span>
+                </div>
+                <div class="ingrediente">
+                    <button type="button" class="btn-menos" data-ingrediente="Bacon">-</button>
+                    <span class="quantidade" data-ingrediente="Bacon">0</span>
+                    <button type="button" class="btn-mais" data-ingrediente="Bacon">+</button>
+                    <span class="nome-ingrediente">Bacon</span>
+                </div>
+                <div class="ingrediente">
+                    <button type="button" class="btn-menos" data-ingrediente="Calabresa">-</button>
+                    <span class="quantidade" data-ingrediente="Calabresa">0</span>
+                    <button type="button" class="btn-mais" data-ingrediente="Calabresa">+</button>
+                    <span class="nome-ingrediente">Calabresa</span>
+                </div>
+                <div class="ingrediente">
+                    <button type="button" class="btn-menos" data-ingrediente="Presunto">-</button>
+                    <span class="quantidade" data-ingrediente="Presunto">0</span>
+                    <button type="button" class="btn-mais" data-ingrediente="Presunto">+</button>
+                    <span class="nome-ingrediente">Presunto</span>
+                </div>
+                <div class="ingrediente">
+                    <button type="button" class="btn-menos" data-ingrediente="Mussarela">-</button>
+                    <span class="quantidade" data-ingrediente="Mussarela">0</span>
+                    <button type="button" class="btn-mais" data-ingrediente="Mussarela">+</button>
+                    <span class="nome-ingrediente">Mussarela</span>
+                </div>
+                <div class="ingrediente">
+                    <button type="button" class="btn-menos" data-ingrediente="Uva Passas">-</button>
+                    <span class="quantidade" data-ingrediente="Uva Passas">0</span>
+                    <button type="button" class="btn-mais" data-ingrediente="Uva Passas">+</button>
+                    <span class="nome-ingrediente">Uva Passas</span>
+                </div>
+            </section>
+
+            <section class="secao">
+                <h2>Escolha seus Temperos:</h2>
+                <label><input type="checkbox" name="tempero" value="Pimenta do reino"> Pimenta do reino</label>
+                <label><input type="checkbox" name="tempero" value="Pimenta calabresa"> Pimenta calabresa</label>
+                <label><input type="checkbox" name="tempero" value="Manjericão seco"> Manjericão seco</label>
+                <label><input type="checkbox" name="tempero" value="Orégano"> Orégano</label>
+                <label><input type="checkbox" name="tempero" value="Cheiro verde"> Cheiro verde</label>
+            </section>
+
+            <section class="secao">
+                <h2>Escolha sua Carne:</h2>
+                <label><input type="radio" name="carne" value="Carne Moída" required> Carne Moída</label>
+                <label><input type="radio" name="carne" value="Frango"> Frango</label>
+            </section>
+
+            <button type="submit">Adicionar Pedido</button>
+        </form>
+
+        <!-- Área para exibir os pedidos -->
+        <section class="pedidos-container">
+            <h2>Pedidos Realizados:</h2>
+            <ul id="listaPedidos"></ul>
+
+            <!-- Valor Total -->
+            <div id="valorTotal">
+                <p>Valor Total: R$ <span id="total">0.00</span></p>
+            </div>
+
+            <!-- Botões de Ação -->
+            <div class="botoes-acoes">
+                <button id="btnBuscar">Buscar</button>
+                <button id="btnEntrega">Entrega (+ R$ 5,00)</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js"></script>
+</body>
+</html>

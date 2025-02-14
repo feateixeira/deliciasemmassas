@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #e74c3c;
+}
+
+header p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.logo {
+    max-width: 150px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.campo-nome {
+    margin-bottom: 20px;
+}
+
+.campo-nome label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.campo-nome input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.campo-nome input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.secao {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.secao h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"] {
+    background-color: #3498db;
+    color: #fff;
+}
+
+button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+.pedidos-container {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+#listaPedidos {
+    list-style-type: none;
+    margin: 10px 0;
+}
+
+#listaPedidos li {
+    background-color: #fff;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+#valorTotal {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.botoes-acoes {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#btnBuscar {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+#btnBuscar:hover {
+    background-color: #27ae60;
+}
+
+#btnEntrega {
+    background-color: #e67e22;
+    color: #fff;
+}
+
+#btnEntrega:hover {
+    background-color: #d35400;
+}
+
+/* Estilos para os contadores de quantidade */
+.ingrediente {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ingrediente .btn-menos, .ingrediente .btn-mais {
+    padding: 5px 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    width: 30px; /* Largura fixa para os botões */
+    text-align: center; /* Centraliza o texto dentro do botão */
+}
+
+.ingrediente .btn-menos:hover, .ingrediente .btn-mais:hover {
+    background-color: #ddd;
+}
+
+.ingrediente .quantidade {
+    margin: 0 10px;
+    font-size: 1rem;
+    min-width: 20px; /* Largura mínima para a quantidade */
+    text-align: center; /* Centraliza o número */
+}
+
+.ingrediente .nome-ingrediente {
+    margin-left: 10px;
+    font-size: 1rem;
+    flex: 1; /* Faz o nome ocupar o espaço restante */
+}
+
+/* Estilos para a seção de ingredientes extras */
+.secao h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.secao label {
+    display: block;
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .secao {
+        padding: 10px;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .botoes-acoes {
+        flex-direction: column;
+    }
+
+    .ingrediente .btn-menos, .ingrediente .btn-mais {
+        padding: 5px;
+        font-size: 0.9rem;
+        width: 25px; /* Botões menores em telas pequenas */
+    }
+
+    .ingrediente .quantidade {
+        font-size: 0.9rem;
+        margin: 0 5px; /* Reduz o espaçamento */
+    }
+
+    .ingrediente .nome-ingrediente {
+        font-size: 0.9rem;
+    }
+}
