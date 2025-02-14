@@ -27,7 +27,7 @@
         <!-- Formulário de Pedido -->
         <form id="pedidoForm">
             <section class="secao">
-                <h2>Escolha sua Massa:</h2>
+                <h2>Escolha sua Massa (até 2):</h2>
                 <label><input type="radio" name="massa" value="Penne" required> Penne</label>
                 <label><input type="radio" name="massa" value="Talharim"> Talharim</label>
                 <label><input type="radio" name="massa" value="Espaguete"> Espaguete</label>
@@ -84,6 +84,19 @@
                     <button type="button" class="btn-mais" data-ingrediente="Uva Passas">+</button>
                     <span class="nome-ingrediente">Uva Passas</span>
                 </div>
+                <div class="ingrediente">
+                    <button type="button" class="btn-menos" data-ingrediente="Cheddar">-</button>
+                    <span class="quantidade" data-ingrediente="Cheddar">0</span>
+                    <button type="button" class="btn-mais" data-ingrediente="Cheddar">+</button>
+                    <span class="nome-ingrediente">Cheddar</span>
+                </div>
+                <div class="ingrediente">
+                    <button type="button" class="btn-menos" data-ingrediente="Catupiry">-</button>
+                    <span class="quantidade" data-ingrediente="Catupiry">0</span>
+                    <button type="button" class="btn-mais" data-ingrediente="Catupiry">+</button>
+                    <span class="nome-ingrediente">Catupiry</span>
+                </div>
+
             </section>
 
             <section class="secao">
@@ -120,6 +133,7 @@
                 <button id="btnEntrega">Entrega (+ R$ 5,00)</button>
             </div>
         </section>
+        <p hidden> Criado e Programado por Fellipe Texeira @Feteixeiraz</p>
     </div>
 
     <!-- SweetAlert2 JS -->
