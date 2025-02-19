@@ -1,81 +1,123 @@
-document.getElementById('pedidoForm').addEventListener('submit', async function(event) {
-    event.preventDefault();
+// Função para aumentar/diminuir a quantidade de ingredientes
+document.querySelectorAll('.btn-mais').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const ingrediente = this.getAttribute('data-ingrediente');
+        const quantidadeElement = document.querySelector(`.quantidade[data-ingrediente="${ingrediente}"]`);
+        if (quantidadeElement) { // Verifica se o elemento existe
+            let quantidade = parseInt(quantidadeElement.textContent);
+            quantidade++;
+            quantidadeElement.textContent = quantidade;
+        }
+    });
+});
 
-    // Coletar o nome do usuário
-    const nome = document.getElementById('nome').value.trim();
-    if (!nome) {
-        Swal.fire({
-            title: 'Atenção!',
-            text: 'Por favor, insira seu nome.',
-            icon: 'warning',
-            confirmButtonText: 'OK'
-        });
-        return;
-    }
+document.querySelectorAll('.btn-menos').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const ingrediente = this.getAttribute('data-ingrediente');
+        const quantidadeElement = document.querySelector(`.quantidade[data-ingrediente="${ingrediente}"]`);
+        if (quantidadeElement) { // Verifica se o elemento existe
+            let quantidade = parseInt(quantidadeElement.textContent);
+            if (quantidade > 0) {
+                quantidade--;
+                quantidadeElement.textContent = quantidade;
+            }
+        }
+    });
+});
+// Função para aumentar/diminuir a quantidade de carnes
+document.querySelectorAll('.btn-mais[data-carne]').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const carne = this.getAttribute('data-carne');
+        const quantidadeElement = document.querySelector(`.quantidade[data-carne="${carne}"]`);
+        if (quantidadeElement) { // Verifica se o elemento existe
+            let quantidade = parseInt(quantidadeElement.textContent);
+            quantidade++;
+            quantidadeElement.textContent = quantidade;
+        }
+    });
+});
 
-    // Coletar as escolhas do usuário
-    const massa = document.querySelector('input[name="massa"]:checked');
-    const molhos = Array.from(document.querySelectorAll('input[name="molho"]:checked')).map(m => m.value);
-    const temperos = Array.from(document.querySelectorAll('input[name="tempero"]:checked')).map(t => t.value);
-    const carne = document.querySelector('input[name="carne"]:checked');
+document.querySelectorAll('.btn-menos[data-carne]').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const carne = this.getAttribute('data-carne');
+        const quantidadeElement = document.querySelector(`.quantidade[data-carne="${carne}"]`);
+        if (quantidadeElement) { // Verifica se o elemento existe
+            let quantidade = parseInt(quantidadeElement.textContent);
+            if (quantidade > 0) {
+                quantidade--;
+                quantidadeElement.textContent = quantidade;
+            }
+        }
+    });
+});
 
-    // Coletar ingredientes e suas quantidades
-    const ingredientes = [];
-    document.querySelectorAll('.ingrediente').forEach(ing => {
+document.querySelectorAll('.btn-menos[data-carne]').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const carne = this.getAttribute('data-carne');
+        const quantidadeElement = document.querySelector(`.quantidade[data-carne="${carne}"]`);
+        if (quantidadeElement) { // Verifica se o elemento existe
+            let quantidade = parseInt(quantidadeElement.textContent);
+            if (quantidade > 0) {
+                quantidade--;
+                quantidadeElement.textContent = quantidade;
+            }
+        }
+    });
+});
+
+function coletarCarnes() {
+    const carnes = [];
+    document.querySelectorAll('.ingrediente[data-carne]').forEach(ing => {
         const nome = ing.querySelector('.nome-ingrediente').textContent;
         const quantidade = parseInt(ing.querySelector('.quantidade').textContent);
         if (quantidade > 0) {
-            ingredientes.push({ nome, quantidade });
+            carnes.push({ nome, quantidade });
         }
     });
+    return carnes;
+}
 
-    // Verificar se o usuário escolheu mais de 2 molhos
-    if (molhos.length > 2) {
-        Swal.fire({
-            title: 'Atenção!',
-            text: 'Você pode escolher no máximo 2 molhos.',
-            icon: 'warning',
-            confirmButtonText: 'OK'
-        });
-        return;
+function calcularCustoCarnesExtras(carnes) {
+    let custo = 0;
+    if (carnes.length > 1) { // Se houver mais de um tipo de carne selecionado
+        custo = (carnes.length - 1) * 4; // R$ 4,00 por cada carne adicional
     }
-
-    // Calcular o custo dos ingredientes extras
-    let custoIngredientesExtras = 0;
-    ingredientes.forEach(i => {
-        if (i.quantidade > 1) {
-            custoIngredientesExtras += (i.quantidade - 1) * 2; // R$ 2,00 por unidade adicional
-        }
-    });
-
-    // Formatar o pedido
-    const pedidoFormatado = `
+    return custo;
+}
+// Função para formatar o pedido
+function formatarPedido(nome, massa, molhos, ingredientes, carnes, temperos, custoIngredientesExtras, custoCarnesExtras) {
+    let pedidoFormatado = `
         *Pedido de Macarrão:*
         - Nome: ${nome}
         - Massa: ${massa ? massa.value : 'Nenhuma escolhida'}
         - Molhos: ${molhos.length > 0 ? molhos.join(', ') : 'Nenhum escolhido'}
         - Ingredientes: ${ingredientes.length > 0 ? ingredientes.map(i => `${i.nome} (${i.quantidade}x)`).join(', ') : 'Nenhum escolhido'}
+        - Carnes: ${carnes.length > 0 ? carnes.map(c => `${c.nome} (${c.quantidade}x)`).join(', ') : 'Nenhuma escolhida'}
         - Temperos: ${temperos.length > 0 ? temperos.join(', ') : 'Nenhum escolhido'}
-        - Carne: ${carne ? carne.value : 'Nenhuma escolhida'}
-        - Custo Ingredientes Extras: R$ ${custoIngredientesExtras.toFixed(2)}
     `;
 
-    // Adicionar o pedido à lista de pedidos
-    adicionarPedido(pedidoFormatado, custoIngredientesExtras);
+    // Adicionar custos extras apenas se houver
+    if (custoIngredientesExtras > 0) {
+        pedidoFormatado += `\n- Custo Ingredientes Extras: R$ ${custoIngredientesExtras.toFixed(2)}`;
+    }
+    if (custoCarnesExtras > 0) {
+        pedidoFormatado += `\n- Custo Carnes Extras: R$ ${custoCarnesExtras.toFixed(2)}`;
+    }
 
-    // Limpar o formulário para o próximo pedido
-    document.getElementById('pedidoForm').reset();
-});
+    return pedidoFormatado;
+}
 
 // Lista de pedidos
 let pedidos = [];
-const valorMacarrao = 25; // Valor de cada macarrão
+const valorMacarrao = 30; // Valor de cada macarrão
 let valorTotal = 0;
 
-// Função para adicionar um pedido à lista
-function adicionarPedido(pedido, custoIngredientesExtras) {
+function adicionarPedido(pedido, custoIngredientesExtras, custoCarnesExtras) {
     pedidos.push(pedido); // Adiciona o pedido ao array
-    valorTotal += valorMacarrao + custoIngredientesExtras; // Adiciona R$ 25,00 + custo dos extras
+
+    // Calcula o valor total do pedido
+    const custoExtras = custoIngredientesExtras + custoCarnesExtras;
+    valorTotal += valorMacarrao + custoExtras; // Adiciona R$ 30,00 + custo dos extras
 
     // Atualiza o valor total na tela
     document.getElementById('total').textContent = valorTotal.toFixed(2);
@@ -87,7 +129,6 @@ function adicionarPedido(pedido, custoIngredientesExtras) {
     itemLista.textContent = pedido;
     listaPedidos.appendChild(itemLista);
 }
-
 // Função para enviar todos os pedidos via WhatsApp
 function enviarPedidosWhatsApp(entrega, endereco) {
     if (pedidos.length === 0) {
@@ -117,7 +158,7 @@ function enviarPedidosWhatsApp(entrega, endereco) {
         *Nome:* ${nome}
         *Valor Total:* R$ ${valorFinal.toFixed(2)}
         ${entrega ? '(Inclui taxa de entrega de R$ 5,00)' : ''}
-        ${entrega ? `\n*Endereço de Entrega:* ${endereco}` : '\n*Retirada na Loja:* Quadra 34 conjunto f casa 6 - Vila São José, Brazlândia - DF'}
+        ${entrega ? `\n*Endereço de Entrega:* ${endereco}` : '\n*Retirada na Loja:* Rua Exemplo, 123 - Bairro, Cidade - SP'}
         \n*Tempo de Preparo:* 30 a 40 minutos
     `;
 
@@ -125,13 +166,21 @@ function enviarPedidosWhatsApp(entrega, endereco) {
     const pedidosCodificados = encodeURIComponent(todosPedidosFormatados);
 
     // Número de telefone para enviar os pedidos (substitua pelo número desejado)
-    const numeroTelefone = '61996575524'; // Exemplo: +55 (11) 99999-9999
+    const numeroTelefone = '5561996575524'; // Exemplo: +55 (11) 99999-9999
 
     // Criar o link do WhatsApp
     const linkWhatsApp = `https://wa.me/${numeroTelefone}?text=${pedidosCodificados}`;
 
     // Abrir o link do WhatsApp
     abrirLinkWhatsApp(linkWhatsApp);
+
+    // Limpar os campos da página
+    limparCampos();
+
+    // Limpar a lista de pedidos e o valor total
+    pedidos = []; // Reseta a lista de pedidos
+    valorTotal = 0; // Reseta o valor total
+    document.getElementById('total').textContent = valorTotal.toFixed(2); // Atualiza o valor total na tela
 }
 
 // Função para abrir o link do WhatsApp
@@ -181,25 +230,109 @@ document.getElementById('btnEntrega').addEventListener('click', function() {
     });
 });
 
-// Função para aumentar/diminuir a quantidade de ingredientes
-document.querySelectorAll('.btn-mais').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const ingrediente = this.getAttribute('data-ingrediente');
-        const quantidadeElement = document.querySelector(`.quantidade[data-ingrediente="${ingrediente}"]`);
-        let quantidade = parseInt(quantidadeElement.textContent);
-        quantidade++;
-        quantidadeElement.textContent = quantidade;
-    });
-});
+// Evento de envio do formulário
+document.getElementById('pedidoForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-document.querySelectorAll('.btn-menos').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const ingrediente = this.getAttribute('data-ingrediente');
-        const quantidadeElement = document.querySelector(`.quantidade[data-ingrediente="${ingrediente}"]`);
-        let quantidade = parseInt(quantidadeElement.textContent);
-        if (quantidade > 0) { // Garante que a quantidade não seja negativa
-            quantidade--;
-            quantidadeElement.textContent = quantidade;
+    // Coletar o nome do usuário
+    const nome = document.getElementById('nome').value.trim();
+    if (!nome) {
+        Swal.fire({
+            title: 'Atenção!',
+            text: 'Por favor, insira seu nome.',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+
+    // Coletar as escolhas do usuário
+    const massa = document.querySelector('input[name="massa"]:checked');
+    const molhos = Array.from(document.querySelectorAll('input[name="molho"]:checked')).map(m => m.value);
+    const ingredientes = [];
+    document.querySelectorAll('.ingrediente:not([data-carne])').forEach(ing => {
+        const nome = ing.querySelector('.nome-ingrediente').textContent;
+        const quantidade = parseInt(ing.querySelector('.quantidade').textContent);
+        if (quantidade > 0) {
+            ingredientes.push({ nome, quantidade });
         }
     });
+    const temperos = Array.from(document.querySelectorAll('input[name="tempero"]:checked')).map(t => t.value);
+    const carnes = coletarCarnes();
+
+    // Verificar se o usuário escolheu mais de 2 molhos
+    if (molhos.length > 2) {
+        Swal.fire({
+            title: 'Atenção!',
+            text: 'Você pode escolher no máximo 2 molhos.',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+
+    // Calcular o custo dos ingredientes extras
+    let custoIngredientesExtras = 0;
+    ingredientes.forEach(i => {
+        if (i.quantidade > 1) {
+            custoIngredientesExtras += (i.quantidade - 1) * 2; // R$ 2,00 por unidade adicional
+        }
+    });
+
+    // Calcular o custo das carnes extras
+    const custoCarnesExtras = calcularCustoCarnesExtras(carnes);
+
+    // Formatar o pedido
+    const pedidoFormatado = formatarPedido(
+        nome,
+        massa,
+        molhos,
+        ingredientes,
+        carnes,
+        temperos,
+        custoIngredientesExtras,
+        custoCarnesExtras
+    );
+
+    // Adicionar o pedido à lista de pedidos
+    adicionarPedido(pedidoFormatado, custoIngredientesExtras, custoCarnesExtras);
+
+    // Limpar o formulário para o próximo pedido
+    document.getElementById('pedidoForm').reset();
 });
+
+function calcularCustoCarnesExtras(carnes) {
+    let custo = 0;
+    if (carnes.length > 1) { // Se houver mais de um tipo de carne selecionado
+        custo = (carnes.length - 1) * 4; // R$ 4,00 por cada carne adicional
+    }
+    return custo;
+}
+
+function limparCampos() {
+    // Limpa o campo do nome
+    document.getElementById('nome').value = '';
+
+    // Limpa a seleção de massa
+    document.querySelectorAll('input[name="massa"]:checked').forEach(massa => {
+        massa.checked = false;
+    });
+
+    // Limpa a seleção de molhos
+    document.querySelectorAll('input[name="molho"]:checked').forEach(molho => {
+        molho.checked = false;
+    });
+
+    // Limpa a seleção de temperos
+    document.querySelectorAll('input[name="tempero"]:checked').forEach(tempero => {
+        tempero.checked = false;
+    });
+
+    // Zera as quantidades de ingredientes
+    document.querySelectorAll('.quantidade').forEach(quantidadeElement => {
+        quantidadeElement.textContent = '0';
+    });
+
+    // Limpa a lista de pedidos
+    document.getElementById('listaPedidos').innerHTML = '';
+}

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monte Seu Macarrão</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons8-macarrão-48.png">
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
@@ -27,7 +27,7 @@
         <!-- Formulário de Pedido -->
         <form id="pedidoForm">
             <section class="secao">
-                <h2>Escolha sua Massa:</h2>
+                <h2>Escolha sua Massa (até 2):</h2>
                 <label><input type="radio" name="massa" value="Penne" required> Penne</label>
                 <label><input type="radio" name="massa" value="Talharim"> Talharim</label>
                 <label><input type="radio" name="massa" value="Espaguete"> Espaguete</label>
@@ -35,7 +35,7 @@
 
             <section class="secao">
                 <h2>Escolha seus Molhos (até 2):</h2>
-                <label><input type="checkbox" name="molho" value="Bolonhesa"> Bolonhesa</label>
+                <label><input type="checkbox" name="molho" value="Bolonhesa"> Molho Bolonhesa</label>
                 <label><input type="checkbox" name="molho" value="Molho Branco"> Molho Branco</label>
                 <label><input type="checkbox" name="molho" value="Molho Cheddar"> Molho Cheddar</label>
             </section>
@@ -84,6 +84,18 @@
                     <button type="button" class="btn-mais" data-ingrediente="Uva Passas">+</button>
                     <span class="nome-ingrediente">Uva Passas</span>
                 </div>
+                <div class="ingrediente">
+                    <button type="button" class="btn-menos" data-ingrediente="Cheddar">-</button>
+                    <span class="quantidade" data-ingrediente="Cheddar">0</span>
+                    <button type="button" class="btn-mais" data-ingrediente="Cheddar">+</button>
+                    <span class="nome-ingrediente">Cheddar</span>
+                </div>
+                <div class="ingrediente">
+                    <button type="button" class="btn-menos" data-ingrediente="Catupiry">-</button>
+                    <span class="quantidade" data-ingrediente="Catupiry">0</span>
+                    <button type="button" class="btn-mais" data-ingrediente="Catupiry">+</button>
+                    <span class="nome-ingrediente">Catupiry</span>
+                </div>
             </section>
 
             <section class="secao">
@@ -97,8 +109,18 @@
 
             <section class="secao">
                 <h2>Escolha sua Carne:</h2>
-                <label><input type="radio" name="carne" value="Carne Moída" required> Carne Moída</label>
-                <label><input type="radio" name="carne" value="Frango"> Frango</label>
+                <div class="ingrediente" data-carne="Carne Moída">
+                    <button type="button" class="btn-menos" data-carne="Carne Moída">-</button>
+                    <span class="quantidade" data-carne="Carne Moída">0</span>
+                    <button type="button" class="btn-mais" data-carne="Carne Moída">+</button>
+                    <span class="nome-ingrediente">Carne Moída</span>
+                </div>
+                <div class="ingrediente" data-carne="Frango">
+                    <button type="button" class="btn-menos" data-carne="Frango">-</button>
+                    <span class="quantidade" data-carne="Frango">0</span>
+                    <button type="button" class="btn-mais" data-carne="Frango">+</button>
+                    <span class="nome-ingrediente">Frango</span>
+                </div>
             </section>
 
             <button type="submit">Adicionar Pedido</button>
@@ -120,6 +142,8 @@
                 <button id="btnEntrega">Entrega (+ R$ 5,00)</button>
             </div>
         </section>
+
+        <p hidden> Criado e Programado por Fellipe Texeira @Feteixeiraz</p>
     </div>
 
     <!-- SweetAlert2 JS -->

@@ -11,6 +11,9 @@ body {
     background-color: #f8f8f8;
     color: #333;
     line-height: 1.6;
+    background-image: url("assets/italian-pasta-seamless-pattern-macaroni-outline-illustration_202271-1030.avif");
+    backdrop-filter: blur(5px);
+    background-size: cover;
 }
 
 .container {
