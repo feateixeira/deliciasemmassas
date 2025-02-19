@@ -212,6 +212,14 @@ button[type="submit"]:hover {
     color: #555;
 }
 
+.destaque {
+    font-size: 0.9em; /* Tamanho pequeno */
+    color: #e67e22; /* Cor laranja para destacar */
+    font-weight: bold; /* Texto em negrito */
+    margin-top: 5px; /* Espaçamento acima */
+    margin-bottom: 10px; /* Espaçamento abaixo */
+}
+
 /* Responsividade */
 @media (max-width: 600px) {
     .container {
